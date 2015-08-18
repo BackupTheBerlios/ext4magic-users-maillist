@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3584.1386527703.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3584.1386527703.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Sun Dec  8 19:34:59 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+300000 gel&#246;schte Dateien und dann 14 Tage gewartet bis die Platte vom Kontroller ging. ;-(((
+Viel Hoffnung mache ich dir da nicht. Im Journal wird da nicht viel brauchbares mehr  im Journal zu finden sein.
+128 MB Journal sind maximal 500000 Inode, (typisch  nur 200000-400000) da d&#252;rften das bei dir dort drinnen fast alles die  gel&#246;schten sein.
+Bei mehrmaligem mounten danach, oder sonstigen Zugriffsversuchen auf das Dateisystem hast du mit Sicherheit auch noch einiges vom Rest &#252;berschrieben.
+
+Wenn du mit diesen Zeitparametern noch &#220;berreste von der Datenstruktur siehst, sollte die  &#8211;m  oder &#8211;M Option noch einiges wiederherstellen k&#246;nnen.
+ 
+
+&gt;<i> Nachdem der &#8222;l&#8220; Parameter nicht findet, habe ich es mit dem &#8222;m&#8220; Parameter probiert:
+</I>
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic /dev/md0 -m -a 1383851400 -b 1383851658 restore/
+</I>&gt;<i> Speicherzugriffsfehler (Speicherabzug geschrieben)
+</I>
+&gt;<i> Was k&#246;nnte das sein??
+</I>
+&gt;<i> Eventuell kommt das, weil der Speicherplatz auf restore/ zu gering ist??
+</I>
+Aber mach dir nicht zuviel Hoffnung darauf, das in einer Dateistruktur mit original  Namen und Path zu finden..
+
+Optionen richtig benutzen:
+# ext4magic /dev/md0  -m  -a  1383851400   -d   /PATH/ZUM/restore
+
+Und Verzeichnis restore muss beschreibbar und auf einem Linuxdateisystem liegen zB. ext3 oder ext4 , also nicht auf  NFS/SAMBA/NTFS/ &#8230;&#8230;&#8230;..
+Die Gr&#246;&#223;e wird nicht abgefragt, wenn es eben voll ist dann bringt ext4magic Fehlermeldungen das das Scrheiben nicht funktioniert hat,  macht aber munter weiter, bis es fertig ist oder du es abbrichst.
+
+Warum ext4magic dort bei dir genau abgest&#252;rzt ist, ist mir nicht klar, da die Optionen wohl aber so auch nicht korrekt gesetzt sind, m&#252;sste ich auch erst suchen was ext4magic da versucht haben k&#246;nnte.  Starte das als root wenn m&#246;glich aus einer /bin/bash heraus, wenn es sowas noch auf
+?buntu geben sollte,  Dash (Debian Almquist Shell) hat schon gelegentlich  in einigen Situationen  Probleme bereitet. 
+
+robi
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

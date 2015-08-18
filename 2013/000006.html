@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.2889.1385599788.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000005.html">
+   <LINK REL="Next"  HREF="000007.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.2889.1385599788.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Thu Nov 28 01:49:45 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000005.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+        <LI>Next message: <A HREF="000007.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Robi,
+
+erst mal einen fetten Dank f&#252;r Deine ausf&#252;hrliche Mail!!
+
+Ich versuch mal einen 2ten Ansatz um noch ein paar Background-Infos zu geben:
+
+Wenn ich die Platte ins NAS einsetze, bootet sie wunderbar (hab ja 2 davon) nur dass eben das Unterverzeichnis /raid0/data weg ist. /raid/sys ist noch da.
+Das Fedora-Linux nat&#252;rlich auch.
+
+M&#252;ssten mir die Leute aus Taiwan nicht sagen k&#246;nnen, wie sie die Kiste pr&#228;pariert haben (mit System/Raid/Schichten drunter und dr&#252;ber), damit ich nicht kompliziert rumsuchen muss?
+Wenn das NAS doch bootet, muss man doch wissen wo was ist, oder?
+Ich wei&#223; nur nicht, was ich die Herren konkret (auch noch in Englisch) fragen soll??
+sie meinten einfach mounten (wobei mounten ja nicht so gut ist, wegen dem Journalschreiben, wenn ich das richtig verstanden habe).
+also 
+--------------------------
+&#8222;Dear Sir,
+
+Thanks for your mail.
+
+The data partition is EXT4 thus normal mount command and able to mount thepartiton directly.
+EX: mount /dev/sdx /mnt
+
+If it is not working on the ubuntu 12.04, please try with Fedora or Fedora live USB/DVD.&#8220;
+-------------------------
+
+Zu Deinen Anmerkungen: die 24GB sind vor der 2. Partition
+die 2. Partition an sich ist ja fast 3 TB gro&#223;.
+Und es sind insgesamt 5 Partitionen, ich hatte die nur nicht alle abgetippt, da ich dachte das ist nicht so relevant.
+
+&gt;<i> Interessanterweise findet photorec durchaus etwas auf der Platte, nur v&#246;llig unstrukturiert und ohne Verzeichnisse.
+</I>&gt;<i> (auch restorer ultimate demo oder r-linx finden Dateien) allerdings finden die auf der 3TB Platte zig T-Bytes und Millionen von Dateien), das kann man ja gar nicht handeln...
+</I>&gt;<i> Meine Hoffnung w&#228;re, dass das Verzeichnis und die darunter liegenden Verzeichnisse &quot;../data/..&quot; wieder hergestellt werden k&#246;nnten.
+</I>&gt;<i> oder kann ich mir das abschminken, weil eh nur einzelne Dateien wiederhergestellt werden k&#246;nnen?
+</I>&gt;<i> die Bilder/Videos waren nach Jahren sortiert...
+</I>
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+Nun zu Deinen Anweisungen:
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+1) od &#8230; Befehl hat geklappt da kamen die Werte auch raus.
++++++++++++++++++++++++++++
+od -Ax -x /dev/sc[Kda[Kb3[K2 | awk '$6 == &quot;ef53&quot; &amp;&amp; $1 +[K~/.*30$/ {}'p}'r}'i}'n}'t}'[C[C
+100430 ffee 528c 0010 0016 ef53 0001 0001 0000
+8100030 0075 51f8 0000 0016 ef53 0000 0001 0000
+11c85430 b072 833d 5307 19ef ef53 5335 d19f d4f0
+11d9c730 bb8e a050 0fdc 73ba ef53 49b8 8b5f 99a2
+18100030 0075 51f8 0000 0016 ef53 0000 0001 0000
+1b7f8930 eb76 9bb2 1785 1ce5 ef53 9d6b 5d12 cc1e
+1b7fa930 eb76 9bb2 1785 1ce5 ef53 9d6b 5d12 cc1e
+1b9c7230 214a 82b5 869d af6c ef53 9b63 6d9f 4527
+1cbd0c30 5f88 ab3d bd4f efbf ef53 c2ff de9f f1df
+1cc7e730 3881 22b5 4347 ecce ef53 b19e 92f3 2a20
+1d3bbd30 d515 8bea 2ee3 92db ef53 411b d09c d6d0
+28100030 0075 51f8 0000 0016 ef53 0000 0001 0000
+2e64c530 5a44 0064 ae37 8ed3 ef53 0c8b 18e0 cce3
+2e6f9430 7016 4c7a f94f 3aa0 ef53 5255 41d6 276a
+38100030 0075 51f8 0000 0016 ef53 0000 0001 0000
+459be930 ef53 15e1 ef53 15e1 ef53 15e1 b5c7 0000
+48100030 0075 51f8 0000 0016 ef53 0000 0001 0000
+555b8930 ef53 15e1 ef53 15e1 ef53 15e1 b5c7 0000
++++++++++++++++++++++++++++
+
+Bei der 48100030 kommt 295 168 raus; passt also
+Nun das dump2fs:
+
++++++++++++++++++++++++++++
+
+dump2fs -h -o blocksize=4096 -o superblock=295168 /dev/sdb2
+dumpe2fs 1.42 (29-Nov-2011)
+Filesystem volume name:   &lt;none&gt;
+Last mounted on:          &lt;not available&gt;
+Filesystem UUID:          45129e08-db88-4d94-8c73-5202dfbf5e2a
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent flex_bg sparse_super large_file huge_file uninit_bg dir_nlink extra_isize
+Filesystem flags:         signed_directory_hash 
+Default mount options:    (none)
+Filesystem state:         not clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              181665792
+Block count:              726662622
+Reserved block count:     0
+Free blocks:              715208834
+Free inodes:              181665781
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      850
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         8192
+Inode blocks per group:   512
+RAID stride:              1
+RAID stripe width:        1
+Flex block group size:    16
+Filesystem created:       Tue Jul 30 20:05:22 2013
+Last mount time:          n/a
+Last write time:          Tue Jul 30 20:05:41 2013
+Mount count:              0
+Maximum mount count:      22
+Last checked:             Tue Jul 30 20:05:22 2013
+Check interval:           15552000 (6 months)
+Next check after:         Sun Jan 26 19:05:22 2014
+Lifetime writes:          152 MB
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:	          256
+Required extra isize:     28
+Desired extra isize:      28
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      11fbcdec-6858-4bd8-a404-c80c07fd3989
+Journal backup:           inode blocks
+Journal superblock magic number invalid!
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# 
++++++++++++++++++++++++++++
+
+Beim folgenden Schritt blicke ich nicht, was Du meinst:
+
+&#8222;Sollte das passen und du mehrere solcher zusammenpassender (UUID und gr&#246;&#223;e vergleichen) Superblockkopien gefunden haben , dann
+Fehlt nur der Superblock eventuell noch ersten Kopien auch noch, die anderen haben aber alle den genauen Anfangswert wie meine,
+dann ist der Dateianfang &#252;berschrieben, dann kommst du mit dem Howto im Wiki unter Expert-Mode wahrscheinlich
+wieder an deine Dateien. (eventull auch mit fsck und Superblockkopien wenn nur der Supberblock kaputt ist, aber sollte da wirklich
+sonst auch noch was gel&#246;scht sein, oder mehr als nur die ersten paar Bl&#246;cke defekt sein,  nach einem fsck geht mit ext4magic dann nichts mehr)&quot;
+
+&gt;&gt;<i> also jetzt nach Wiki-Vorgaben gehen, oder wie?
+</I>&gt;&gt;<i> vorher das Programm mit expert modus kompilieren?
+</I>
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+Gru&#223;,
+Eli
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+
+&gt;&gt;<i> Fakt ist, dass alles unter /raid0/_ehemals_data_/ weg ist.
+</I>&gt;&gt;<i> Die Platten sind in raid1 Konfiguriert (Mirror) und &quot;partet -l&#8220; &#252;ber mein Ubuntu zeigt das auch an.
+</I>Was dir partet anzeigt ist nur die ID aus der Partitionstabelle, ob das wirklich ein normales Raid ist, oder ob da noch 
+irgendwelche andere Schichten dazwischen gepackt sind sieht man da nicht.
+
+&gt;&gt;<i> 2		24GB	3001GB	 2926GB						RAID
+</I>Wenn es wirklich nur 24 GB sein sollten, dann hast Gl&#252;ck, du wirst wahrscheinlich ein Image von dieser 
+Partition ben&#246;tigen, 24GB lassen sich noch vern&#252;nftig handhaben.
+
+&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>&gt; ext4magic /dev/sdb2 
+</I>&gt;&gt;<i> /dev/sdb2 Error 2133571347 while opening filesystem
+</I>Fehler bedeutet soviel, das dort wo du suchst kein ext2/3/4  Superblock ist.
+
+Entweder  ist nach dem rebooten  eine andere Partitionstabelle aktiv geworden,
+oder du liegst falsch, und das Dateisystem liegt woanders,
+oder es ist kein wirkliches ext3/4,
+oder es ist das Dateisystem oder der Anfang davon &#252;berschrieben worden,
+oder das Dateisystem hat durch dazwischen gelagerte Schichten,(Raid, LV oder asiatischen Eigenbauten, oder) einen anderen Offset.
+oder,oder, oder.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131128/a27ba0d1/attachment-0001.html">https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131128/a27ba0d1/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000005.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+	<LI>Next message: <A HREF="000007.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

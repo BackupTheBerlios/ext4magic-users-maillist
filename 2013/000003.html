@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] No undeled inode 99748101 in journal found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20No%20undeled%20inode%2099748101%20in%20journal%20found&In-Reply-To=%3Cmailman.776.1364244258.1321.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000002.html">
+   <LINK REL="Next"  HREF="000004.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] No undeled inode 99748101 in journal found</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20No%20undeled%20inode%2099748101%20in%20journal%20found&In-Reply-To=%3Cmailman.776.1364244258.1321.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] No undeled inode 99748101 in journal found">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Mon Mar 25 21:34:50 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000002.html">[Ext4magic-users] No undeled inode 99748101 in journal found
+</A></li>
+        <LI>Next message: <A HREF="000004.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First, thanks for use of this list ;-)                                     
+
+&gt;<i> Any interpretation of the following would be gratefully received :)
+</I>&gt;<i>                                                                    
+</I>&gt;<i> I'm getting recovery of some files, but some other files, accidentally 
+</I>&gt;<i> deleted at the same time, generate the following (with -f path/file.tla -R):
+</I>&gt;<i>                                                                             
+</I>&gt;<i>   Inode found &quot;path/file.tla&quot; 99748101                                      
+</I>&gt;<i>   No undeled inode 99748101 in journal found                                
+</I>
+Let me comment your console output.
+
+&gt;<i> Using internal Journal at Inode 8
+</I>&gt;<i> Activ Time after : Fri Dec 23 17:59:41 1994 Activ Time before : Sun 
+</I>&gt;<i> Mar 24 17:59:41 2013
+</I>&gt;<i> Inode found &quot;path/file.tla&quot; 99748101        
+</I>&gt;<i> Inode 99748101 is at group 12176, block 398983344, offset 1024
+</I>&gt;<i>                                                               
+</I>&gt;<i> Transactions of Filesystemblock 398983344 in Journal          
+</I>&gt;<i> FS-Block Journal Transact                                     
+</I>&gt;<i> 398983344 23566 467631                                        
+</I>&gt;<i> 398983344 23819 467632                                        
+</I>&gt;<i> No entry with this time found                                 
+</I>
+You used a very old AFTER-time and &#8220;-T&#8221;
+ext4magic found the name and the inode number for this name:  99748101 The inode number says, in which file system block this inode is located : 398983344
+and ext4magic found 2 journal blocks that currently include copys from this block   
+This blocks written in transaction 467631 and 467632                               
+
+&gt;<i> # ext4magic -I 99748101 -t 467632 -d e4m_abR -R /dev/md10
+</I>
+You are prompted to display the content for inode 99748101 of transaction 467632 (-I 99748101 -t 467632) and at the same you force to restore this inode. (-R)
+
+let's look at the inode data
+
+&gt;<i> Inode: 99748101 Type: regular Mode: 0664 Flags: 0x80000
+</I>&gt;<i> Generation: 1467905398 Version: 0x00000000:00000001
+</I>&gt;<i> User: 1000 Group: 1000 Size: 0
+</I>&gt;<i> File ACL: 0 Directory ACL: 0
+</I>&gt;<i> Links: 0 Blockcount: 0
+</I>&gt;<i> Fragment: Address: 0 Number: 0 Size: 0
+</I>&gt;<i> ctime: 1363888292:1666146576 -- Thu Mar 21 17:51:32 2013
+</I>&gt;<i> atime: 1348804175:3217844000 -- Fri Sep 28 04:49:35 2012
+</I>&gt;<i> mtime: 1363888292:1666146576 -- Thu Mar 21 17:51:32 2013
+</I>&gt;<i> crtime: 1348803911:2670552936 -- Fri Sep 28 04:45:11 2012
+</I>&gt;<i> dtime: 1363888292 -- Thu Mar 21 17:51:32 2013
+</I>
+&#8220;Size: 0&#8221; ,  &#8220;Links: 0&#8221; , &#8220;Blockcount: 0&#8221; ,&#8221; dtime: 1363888292&#8221;
+This inode is a deleted inode, (deleted:  Mar 21 17:51:32) There is no filesize and no databocks in this inode, and (not to see at this output) no pointer to datablocks.
+
+The result must be a empty file. If you use the other transaction, the result is the same.
+At begin ext4magic say &#8220;No undeled inode 99748101 in journal found&#8221; and this is correct.
+The copies for this block written to the journal during the delete process.
+Deleted inode or their copies can't be used for the restore, for this undeleted copies are required.
+
+Why can restore some files and not others, although all have been deleted at the same time?
+
+The journal works like a ring buffer, and typically there are 200,000 up to 400,000 inode copies.
+The oldest will be overwritten when new data come in. New inode copies be written if the files or directories touched (read, modify, write, moved, deleted...) In a block are typically 16 inode, only the change of on of this inode creates a copy of the entire inode block to journal. Thus, there are many inode copies of areas which match been working and less or no copies of areas where a log time nobody has look for.
+Some inode blocks have 100 copies in journal and other inode nothing.
+The atime-stamp of your inode say last touch &#8220;Sep 28 04:49:35 2012&#8221;
+
+After a deletion can only files restored which copies of the time before deletion.
+And is never guaranteed so that all, or the most files can be recovered in this way from inode copies.
+
+
+robi
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000002.html">[Ext4magic-users] No undeled inode 99748101 in journal found
+</A></li>
+	<LI>Next message: <A HREF="000004.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

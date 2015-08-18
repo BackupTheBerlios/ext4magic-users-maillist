@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3596.1386543885.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000018.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3596.1386543885.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Mon Dec  9 00:02:11 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000018.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Eli,
+
+&gt;<i> Der Befehl von mir war unvollst&#228;ndig hier eingetippt.
+</I>&gt;<i> der &#8222;-d&#8220; Parameter war vor dem Verzeichnis &#8222;restore&#8220; gesetzt.
+</I>&gt;<i> Der Speicherzugriffsfehler wird ausgespuckt.
+</I>
+Einen bekannten Fehler gibt es dort an genau dieser Stelle, der w&#252;rde auftreten wenn du genau  
+libext2fs version 1.42
+installiert h&#228;ttest.  Das schmei&#223;t  ext4magic an genau dieser Stelle auf die Bretter.
+
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=19031&amp;group_id=11787">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=19031&amp;group_id=11787</A>
+<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=18506&amp;group_id=11787">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=18506&amp;group_id=11787</A>
+<A HREF="http://sourceforge.net/p/e2fsprogs/bugs/298/">http://sourceforge.net/p/e2fsprogs/bugs/298/</A>
+
+Was bei dir installiert ist kannst du nachschauen mit
+
+# ext4magic -Vx  
+
+In diesem Fall entweder dein System vorher updaten, oder gleich ein anderes Linuxsystem benutzen. Du ben&#246;tigst 1.42.irgendwas  oder  1.41.gro&#223;er_9
+Sollte es dieser Fehler nicht sein, m&#252;sste man diesen Speicherzugriffsfehler erst aufwendig analysieren. Das w&#252;rde hier zu weit f&#252;hren und dir nicht so schnell helfen k&#246;nnen.
+ 
+In diesem Fall w&#252;rde ich empfehlen es mal  hier zu versuchen  <A HREF="http://www.cgsecurity.org/wiki/PhotoRec_DE">http://www.cgsecurity.org/wiki/PhotoRec_DE</A>
+extundelte <A HREF="http://extundelete.sourceforge.net/">http://extundelete.sourceforge.net/</A>  w&#252;rde auch nichts bringen, dazu  hast du zu  extrem schlechte Journaldaten.
+
+Und f&#252;r das n&#228;chste Mal gleich noch ein Link 
+<A HREF="http://www.linupedia.org/opensuse/Verlorene_Dateien_wiederherstellen_ext3_ext4#Ich_habe_gerade_all_meine_Daten_gel.C3.B6scht.2C_Erste_Hilfe">http://www.linupedia.org/opensuse/Verlorene_Dateien_wiederherstellen_ext3_ext4#Ich_habe_gerade_all_meine_Daten_gel.C3.B6scht.2C_Erste_Hilfe</A>
+
+
+robi
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000018.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

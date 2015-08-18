@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3559.1386508457.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000014.html">
+   <LINK REL="Next"  HREF="000016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3559.1386508457.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Sun Dec  8 14:14:10 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000014.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000016.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nachtrag:
+
+Nachdem der &#8222;l&#8220; Parameter nicht findet, habe ich es mit dem &#8222;m&#8220; Parameter probiert:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic /dev/md0 -m -a 1383851400 -b 1383851658 restore/
+Speicherzugriffsfehler (Speicherabzug geschrieben)
+
+Was k&#246;nnte das sein??
+
+Eventuell kommt das, weil der Speicherplatz auf restore/ zu gering ist??
+
+Gru&#223;
+Eli
+
+
+
+Am 08.12.2013 um 14:06 schrieb <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">ext4magic-users at lists.berlios.de</A>:
+
+&gt;<i> Hi Robi,
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; wenn das so alles klappt, gebe ich einen aus!
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Diese Ausgabe zeigt den Zeitpunkt des Schlamassel. Ich hatte eine App &#252;ber die GUI deinstalliert und gleich darauf ein reboot gemacht.
+</I>&gt;<i> &gt;&gt; Das dauerte sch&#228;tzungsweise 10min bis 15min. Danach war alles weg.
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Das &#8222;data&#8220; Verzeichnis war das erste nach der &#8222;/&#8222;. 
+</I>&gt;<i> &gt;&gt; Vermutlich wird bei einem &quot;rm -r&#8220; von hinten angefangen zu l&#246;schen.
+</I>&gt;<i> &gt;&gt; Dann w&#228;re das &#8222;data&#8220; Verzeichnis um 20:29 Uhr zuletzt gel&#246;scht worden. Ist das korrekt?
+</I>&gt;<i> &gt;&gt; Unter &#8222;meta&#8220; d&#252;rfte nicht so viel interessantes liegen, die Bilder lagen alle im data-Verzeichnis.
+</I>&gt;<i> ------------------------------------------------------------------------------------------
+</I>&gt;<i> 100139009  d  755 (2)      0      0           4096  7-Nov-2013 20:30 meta
+</I>&gt;<i> &lt;77332481&gt; d  755 (2)      0      0              0  7-Nov-2013 20:29 data  
+</I>&gt;<i> &gt;&gt;&gt; das ist das Verzeichnis, dass gel&#246;scht wurde, es liegt unter dem noch bestehenden Verzeichnis /raid0
+</I>&gt;<i> ------------------------------------------------------------------------------------------
+</I>&gt;<i> &gt;&gt; 7-Nov-2013 20:10Uhr: 1383851400 -&gt; a
+</I>&gt;<i> &gt;&gt; 7-Nov-2013 20:24Uhr: 1383852260 -&gt; b
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Der &#8222;H&#8220; Parameter bringt bei d_time ca. 300.000 files:
+</I>&gt;<i> 
+</I>&gt;<i> Filesystem in use: /dev/md0
+</I>&gt;<i> 
+</I>&gt;<i> |-----------c_time  Histogram-----------------  after  --------------------  Thu Nov  7 20:10:00 2013
+</I>&gt;<i> 1383851486 :        0 |                                                  |   Thu Nov  7 20:11:26 2013
+</I>&gt;<i> 1383851572 :        0 |                                                  |   Thu Nov  7 20:12:52 2013
+</I>&gt;<i> 1383851658 :        0 |                                                  |   Thu Nov  7 20:14:18 2013
+</I>&gt;<i> 1383851744 :        0 |                                                  |   Thu Nov  7 20:15:44 2013
+</I>&gt;<i> 1383851830 :        0 |                                                  |   Thu Nov  7 20:17:10 2013
+</I>&gt;<i> 1383851916 :        0 |                                                  |   Thu Nov  7 20:18:36 2013
+</I>&gt;<i> 1383852002 :        0 |                                                  |   Thu Nov  7 20:20:02 2013
+</I>&gt;<i> 1383852088 :        0 |                                                  |   Thu Nov  7 20:21:28 2013
+</I>&gt;<i> 1383852174 :        0 |                                                  |   Thu Nov  7 20:22:54 2013
+</I>&gt;<i> 1383852260 :        0 |                                                  |   Thu Nov  7 20:24:20 2013
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> |-----------d_time  Histogram-----------------  after  --------------------  Thu Nov  7 20:10:00 2013
+</I>&gt;<i> 1383851486 :        0 |                                                  |   Thu Nov  7 20:11:26 2013
+</I>&gt;<i> 1383851572 :    61787 |****************************************          |   Thu Nov  7 20:12:52 2013
+</I>&gt;<i> 1383851658 :     6953 |*****                                             |   Thu Nov  7 20:14:18 2013
+</I>&gt;<i> 1383851744 :      948 |*                                                 |   Thu Nov  7 20:15:44 2013
+</I>&gt;<i> 1383851830 :     7259 |*****                                             |   Thu Nov  7 20:17:10 2013
+</I>&gt;<i> 1383851916 :    47824 |*******************************                   |   Thu Nov  7 20:18:36 2013
+</I>&gt;<i> 1383852002 :    77214 |**************************************************|   Thu Nov  7 20:20:02 2013
+</I>&gt;<i> 1383852088 :    57932 |*************************************             |   Thu Nov  7 20:21:28 2013
+</I>&gt;<i> 1383852174 :    59026 |**************************************            |   Thu Nov  7 20:22:54 2013
+</I>&gt;<i> 1383852260 :        0 |                                                  |   Thu Nov  7 20:24:20 2013
+</I>&gt;<i> ext4magic : EXIT_SUCCESS
+</I>&gt;<i> **************************************************************************************************************************
+</I>&gt;<i> &gt;&gt; Der &#8222;l&#8220; Parameter dann nur noch 20.760 files (die meisten mit 100%)
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; die 3 Verzeichnisse wo meine Daten lagen sehe ich auch
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; data/NAS_Public_NAS_Media
+</I>&gt;<i> &gt;&gt; data/NAS_Public_P2P_Download_
+</I>&gt;<i> &gt;&gt; data/NAS_Public_NAS_Piczza_
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Wenn ich die &#8222;restore&#8220; stellt sich heraus, dass es Links sind die auf z.B.
+</I>&gt;<i> &gt;&gt; /raid0/data/NAS_Public_NAS_Media zeigen, also praktisch auf sich selber, da ja /raid0 das /dev/md0 ist????
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; FRAGE 1: Kann ich auf die Dateien aus diesem Verzeichnis( worauf der Link verweistI) mit bestimmten Befehlsparameter rankommen?
+</I>&gt;<i> **************************************************************************************************************************
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; Wenn ich nun die Zeit eingrenze um mir die ersten 61787 Dateien n&#228;her anzusehen,
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic /dev/md0 -H -a 1383851400 -b 1383851658
+</I>&gt;<i> Filesystem in use: /dev/md0
+</I>&gt;<i> 
+</I>&gt;<i> |-----------c_time  Histogram-----------------  after  --------------------  Thu Nov  7 20:10:00 2013
+</I>&gt;<i> 1383851425 :        0 |                                                 |   Thu Nov  7 20:10:25 2013
+</I>&gt;<i> 1383851450 :        0 |                                                 |   Thu Nov  7 20:10:50 2013
+</I>&gt;<i> 1383851475 :        0 |                                                 |   Thu Nov  7 20:11:15 2013
+</I>&gt;<i> 1383851500 :        0 |                                                 |   Thu Nov  7 20:11:40 2013
+</I>&gt;<i> 1383851525 :        0 |                                                 |   Thu Nov  7 20:12:05 2013
+</I>&gt;<i> 1383851550 :        0 |                                                 |   Thu Nov  7 20:12:30 2013
+</I>&gt;<i> 1383851575 :        0 |                                                 |   Thu Nov  7 20:12:55 2013
+</I>&gt;<i> 1383851600 :        0 |                                                 |   Thu Nov  7 20:13:20 2013
+</I>&gt;<i> 1383851625 :        0 |                                                 |   Thu Nov  7 20:13:45 2013
+</I>&gt;<i> 1383851650 :        0 |                                                 |   Thu Nov  7 20:14:10 2013
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> |-----------d_time  Histogram-----------------  after  --------------------  Thu Nov  7 20:10:00 2013
+</I>&gt;<i> 1383851425 :        0 |                                                 |   Thu Nov  7 20:10:25 2013
+</I>&gt;<i> 1383851450 :        0 |                                                 |   Thu Nov  7 20:10:50 2013
+</I>&gt;<i> 1383851475 :        0 |                                                 |   Thu Nov  7 20:11:15 2013
+</I>&gt;<i> 1383851500 :     8926 |********************                             |   Thu Nov  7 20:11:40 2013
+</I>&gt;<i> 1383851525 :    14770 |*********************************                |   Thu Nov  7 20:12:05 2013
+</I>&gt;<i> 1383851550 :    22427 |**************************************************|   Thu Nov  7 20:12:30 2013
+</I>&gt;<i> 1383851575 :    16078 |************************************             |   Thu Nov  7 20:12:55 2013
+</I>&gt;<i> 1383851600 :     5828 |*************                                    |   Thu Nov  7 20:13:20 2013
+</I>&gt;<i> 1383851625 :      376 |*                                                |   Thu Nov  7 20:13:45 2013
+</I>&gt;<i> 1383851650 :      268 |*                                                |   Thu Nov  7 20:14:10 2013
+</I>&gt;<i> ext4magic : EXIT_SUCCESS
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; bekomme ich mit dem &#8222;l&#8220; Parameter folgenden Output
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic /dev/md0 -l -a 1383851400 -b 1383851658
+</I>&gt;<i> Filesystem in use: /dev/md0
+</I>&gt;<i> 
+</I>&gt;<i> Using  internal Journal at Inode 8
+</I>&gt;<i> Activ Time after  : Thu Nov  7 20:10:00 2013
+</I>&gt;<i> Activ Time before : Thu Nov  7 20:14:18 2013
+</I>&gt;<i> Inode 2 is allocated
+</I>&gt;<i> No undeled inode 2 in journal found
+</I>&gt;<i> ext4magic : EXIT_SUCCESS
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; FRAGE 2: Ist da noch was zu holen?
+</I>&gt;<i> 
+</I>&gt;<i> Gru&#223;,
+</I>&gt;<i> Eli
+</I>&gt;<i> 
+</I>&gt;<i> Am 06.12.2013 um 17:39 schrieb <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">ext4magic-users at lists.berlios.de</A>:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Was du als n&#228;chstes brauchst ist die genaue Zeit zu der der Schlammassel passiert ist, und ein (Linux) Dateisystem das gro&#223; genug ist die recoverten Daten aufzunehmen.
+</I>&gt;&gt;<i> Das Dateisystem scheint rekursiv gel&#246;scht zu sein, nur noch eine Handvoll Inode sind in Benutzung. 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Das Dateisystem in dem die wiedergefundenen Daten geschrieben werden sollen, sollte mindestens so gro&#223; sein, wie die gesch&#228;tzte Gr&#246;&#223;e der Daten die gel&#246;scht sind, je mehr je besser.
+</I>&gt;&gt;<i> Es geht hierbei aber kein Netzwerkdateisystem und kein Windowstypisches Dateisystem. Am besten eine gro&#223;e USB-Platte ein ext4 Dateisystem drauf anlegen und unter /mnt mounten. 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Die Zeit. Du brauchst den Anfang und eventuell auch das Ende des L&#246;schvorganges.  Du hast einen Anhaltspunkt, Wed Nov 20 19:31:10 2013 ist das letzte mal was ge&#228;ndert worden, 
+</I>&gt;&gt;<i> wahrscheinlich war das die Zeit als du gemerkt hast es ist alles weg. Von dieser Zeit aus ein paar Stunden zur&#252;ck und diesen Zeitraum mit der Histroy-Funktion untersuchen.
+</I>&gt;&gt;<i> <A HREF="http://openfacts2.berlios.de/wikide/index.php/BerliosProject:Ext4magic-Time_Options">http://openfacts2.berlios.de/wikide/index.php/BerliosProject:Ext4magic-Time_Options</A>  (letzter Abschnitt)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> # ext4magic /dev/md0  -H  -a 1384965000  -b 1384973000       # deine m&#246;glichen Startzeiten f&#252;r die Histogramm Funktion, eventuell noch ein bisschen anpassen.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Wichtig f&#252;r dich ist die &quot;d_time&quot; Tabelle. Dann die Zeitmarken  &#8211;a &#8230;  und  &#8211;b &#8230;.  entsprechend der Ausgaben weiter anpassen, die Zeit also soweit einschachteln bis du auf die L&#246;schstartzeit auf ungef&#228;hr 1 Minute herangekommen bist, und das L&#246;schen bei der -b Zeit schon abgeschlossen ist.  -a ist eine &quot;Zeit davor&quot;, und -b eine &quot;Zeit danach&quot;.  Ben&#246;tigt wird m&#246;glichst im Minutenbereich genau, ein kleiner Zeitabschnitt (sagen wir 5-8 Minuten, in denen die Dateien gel&#246;scht wurden. Wenn es doch ein l&#228;ngeres L&#246;schman&#246;ver gewesen sein sollte, dann entsprechend eine gr&#246;&#223;eres Zeitfenster.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Du kannst wenn du willst testen inwieweit sich mit den so gefunden Zeiten f&#252;r &#8211;a und &#8211;b jetzt in deinem Journal g&#252;ltige Inodekopien finden lassen, mit denen sich Dateien recovern lassen w&#252;rden.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> # ext4magic  /dev/md0 &#8211;l  -a   &#8230;&#8230;..    &#8211;b &#8230;&#8230;&#8230;         # das &#8220;-l&#8221; ist ein kleines &#8220;-L&#8220; wie list
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Alles was jetzt als 100% angezeigt wird, l&#228;sst sich mit diesen Zeitoptionen problemlos wiederherstellen. 
+</I>&gt;&gt;<i> Sollte das widererwarten  schon aussreichen und alles sein was du brauchst, dann das &quot;-l&quot;  durch  &quot;-r&quot;  austauschen und mit -d das Verzeichnis angeben in das geschrieben werden soll.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Allerdings ist es in deinem Fall wahrscheinlich doch notwendig so viele Dateien wie nur irgendwie m&#246;glich wiederzubekommen, auch wenn eventuell da keine Inodekopie vorhanden sein sollte, 
+</I>&gt;&gt;<i> und eventuell der Name der Datei nicht mehr herzustellen ist.
+</I>&gt;&gt;<i> Bilder, Videos, Musik, Dokumente sind in in ext4magic die gebr&#228;uchlichsten Dateiformate einprogrammiert, und ext4magic kann noch Informationen auswerten die w&#228;hrend des L&#246;schens geschrieben werden. Somit kann mit der Magischen Funktion auch Dateien gefunden werden, von denen keine Spuren mehr im Journal zu finden sind.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> # ext4magic /dev/md0  &#8211;m  &#8211;a &#8230;&#8230;.     &#8211;d  /mnt/Recoverdir
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Nur die Zeitoption &#8211;a angeben und  &#8211;d das Verzeichnis in das geschrieben werden soll, das d&#252;rfte eine ganze Zeit ( eventuell auch einige Stunden )  zu tun haben, (nicht unterbrechen wenn er mal scheinbar l&#228;ngere Zeit  nichts macht, das ist normal, das geht dann schon weiter) und  so viel wie nur irgendwie m&#246;glich in mehreren aufeinanderfolgenden Schritten aus dem gel&#246;schten Dateisystem herausholen.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Viel Erfolg.
+</I>&gt;&gt;<i> 	robi 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Ext4magic-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">Ext4magic-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">https://lists.berlios.de/mailman/listinfo/ext4magic-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Ext4magic-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">Ext4magic-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">https://lists.berlios.de/mailman/listinfo/ext4magic-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131208/960dcb93/attachment-0001.html">https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131208/960dcb93/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000014.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000016.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

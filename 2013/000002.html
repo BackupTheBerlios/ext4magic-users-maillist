@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] No undeled inode 99748101 in journal found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20No%20undeled%20inode%2099748101%20in%20journal%20found&In-Reply-To=%3Cmailman.679.1364166877.1321.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] No undeled inode 99748101 in journal found</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20No%20undeled%20inode%2099748101%20in%20journal%20found&In-Reply-To=%3Cmailman.679.1364166877.1321.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] No undeled inode 99748101 in journal found">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Mon Mar 25 00:07:03 CET 2013</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000003.html">[Ext4magic-users] No undeled inode 99748101 in journal found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Any interpretation of the following would be gratefully received :)
+
+I'm getting recovery of some files, but some other files, accidentally 
+deleted at the same time, generate the following (with -f path/file.tla -R):
+
+   Inode found &quot;path/file.tla&quot; 99748101
+   No undeled inode 99748101 in journal found
+
+or (with -T):
+
+   Filesystem in use: /dev/md10
+
+   Using internal Journal at Inode 8
+   Activ Time after : Fri Dec 23 17:59:41 1994
+   Activ Time before : Sun Mar 24 17:59:41 2013
+   Inode found &quot;path/file.tla&quot; 99748101
+   Inode 99748101 is at group 12176, block 398983344, offset 1024
+
+   Transactions of Filesystemblock 398983344 in Journal
+   FS-Block Journal Transact
+   398983344 23566 467631
+   398983344 23819 467632
+   No entry with this time found
+   ext4magic : EXIT_SUCCESS
+
+The following spits out an empty file:
+
+   # ext4magic -I 99748101 -t 467632 -d e4m_abR -R /dev/md10
+   &quot;e4m_abR&quot; accept for recoverdir
+   Filesystem in use: /dev/md10
+
+   Using internal Journal at Inode 8
+
+   Dump Inode 99748101 from journal transaction 467632
+   Inode: 99748101 Type: regular Mode: 0664 Flags: 0x80000
+   Generation: 1467905398 Version: 0x00000000:00000001
+   User: 1000 Group: 1000 Size: 0
+   File ACL: 0 Directory ACL: 0
+   Links: 0 Blockcount: 0
+   Fragment: Address: 0 Number: 0 Size: 0
+   ctime: 1363888292:1666146576 -- Thu Mar 21 17:51:32 2013
+   atime: 1348804175:3217844000 -- Fri Sep 28 04:49:35 2012
+   mtime: 1363888292:1666146576 -- Thu Mar 21 17:51:32 2013
+   crtime: 1348803911:2670552936 -- Fri Sep 28 04:45:11 2012
+   dtime: 1363888292 -- Thu Mar 21 17:51:32 2013
+   Size of extra inode fields: 28
+   -------- e4m_abR/&lt;99748101&gt;
+   ext4magic : EXIT_SUCCESS
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000003.html">[Ext4magic-users] No undeled inode 99748101 in journal found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

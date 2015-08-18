@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3343.1386186224.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000009.html">
+   <LINK REL="Next"  HREF="000011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3343.1386186224.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Wed Dec  4 20:43:42 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000009.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000011.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hallo Robi,
+zu Deiner Antwort:
+&gt;<i> hattes Du nochmal Zeit auf mein Problem einen Blick zu werfen?
+</I>&gt;&gt;<i>  Alles wartet nur auf deine Reaktion, ich kann hier nicht weiter machen, du sitzt vor dem System.
+</I>
+
+ich hatte das unten stehende noch am Sonntag gepostet.
+Vermutlich kam das nicht an.
+
+Gru&#223;
+Eli
+
+*********************************************************************************
+Hi Robi,
+melde mich wieder aus der Versenkung.
+Hatte leider keine Zeit an meinen &quot;verlorenen Daten&quot; weiter zu machen.
+
+Zur Verkomplettierung die Ausgabe von parted:
+---------------------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>: &gt; parted -l
+Modell: ATA ST3000DM001-1CH1 (scsi)
+Festplatte  /dev/sdb:  3001GB
+Sektorgr&#246;&#223;e (logisch/physisch): 512B/4096B
+Partitionstabelle: gpt
+
+Nummer  Anfang  Ende    Gr&#246;&#223;e   Dateisystem  Name  Flags
+4      1049kB  10,7GB  10,7GB                     RAID
+5      10,7GB  21,5GB  10,7GB                     RAID
+1      21,5GB  23,6GB  2147MB                     RAID
+3      23,6GB  24,2GB  537MB                      RAID
+2      24,2GB  3001GB  2976GB                     RAID
+
+Der Mount-Befehl spuckt folgendes aus (Leider nicht das gew&#252;nschte):
+-------------------------------------------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# mount -o ro,offest=1048576 /dev/sdb1 /mnt
+mount: unbekannter Dateisystemtyp &#8222;linux_raid_member&#8220;
+bzw. auch sdb2 funkt nicht:
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# mount -o ro,offest=1048576 /dev/sdb2 /mnt
+mount: unbekannter Dateisystemtyp &#8222;linux_raid_member&#8220;
+
+mdadm mit -E hat geklappt:
+---------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# mdadm -examine /dev/sdb1
+mdadm: -e does not set the mode, and so cannot be the first option.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# mdadm -E /dev/sdb1
+/dev/sdb1:
+         Magic : a92b4efc
+       Version : 1.2
+   Feature Map : 0x0
+    Array UUID : a60acb70:3474d166:0f06875a:ba33e0d7
+          Name : N2520:10
+ Creation Time : Tue Jul 30 20:05:08 2013
+    Raid Level : raid1
+  Raid Devices : 2
+
+Avail Dev Size : 4192240 (2047.34 MiB 2146.43 MB)
+    Array Size : 2096108 (2047.32 MiB 2146.41 MB)
+ Used Dev Size : 4192216 (2047.32 MiB 2146.41 MB)
+   Data Offset : 2048 sectors
+  Super Offset : 8 sectors
+         State : clean
+   Device UUID : 3ca092b3:068ea611:3ef2dbfe:34cd21ae
+
+   Update Time : Wed Nov 20 19:31:08 2013
+      Checksum : 2c105ac2 - correct
+        Events : 21
+
+
+  Device Role : Active device 0
+  Array State : A. ('A' == active, '.' == missing)
+
+
+Ein weiterer Gedanke:
+---------------------
+Es ist ja so, dass die Jungs aus Taiwan ihr Teil kennen sollten, oder?
+Die haben doch das Raid erstellt.
+
+Wenn Du mir sagst, was ich Sie fragen soll, mache ich das (wenn das &#252;berhaupt hilfreich erscheint?)
+
+Beste Gr&#252;&#223;e,
+Eli
+*********************************************************************************
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000009.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000011.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10">[ date ]</a>
+              <a href="thread.html#10">[ thread ]</a>
+              <a href="subject.html#10">[ subject ]</a>
+              <a href="author.html#10">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

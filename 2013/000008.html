@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3276.1386105033.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3276.1386105033.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Tue Dec  3 22:10:30 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000009.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Robi,
+
+hartes Du nochmal Zeit auf mein Problem einen Blick zu werfen?
+
+lg
+Eli
+
+Am 28.11.2013 um 04:20 schrieb <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">ext4magic-users at lists.berlios.de</A>:
+
+&gt;<i> Hi Eli,
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i> od &#8230; Befehl hat geklappt da kamen die Werte auch raus.
+</I>&gt;&gt;<i> +++++++++++++++++++++++++++
+</I>&gt;&gt;<i> 100430 ffee 528c 0010 0016 ef53 0001 0001 0000
+</I>&gt;&gt;<i> 8100030 0075 51f8 0000 0016 ef53 0000 0001 0000
+</I>&gt;<i> 
+</I>&gt;<i> Da haben wir den Salat ;-) dein Dateisystem befindet sich nicht am Anfang der Partition sondern hat einen Offset von 256 x 4096 Byte
+</I>&gt;<i> Damit solltest du aber das Dateisystem mounten k&#246;nnen, lass bitte eine Platte im NAS und alles andere nur mit der anderen testen und hier weiter experimentieren.
+</I>&gt;<i> 
+</I>&gt;<i> # mount &#8211;o ro,offset=1048576  /dev/sdb1   /mnt
+</I>&gt;<i> 
+</I>&gt;<i> das kannst du bitte mal mit diesem Befehl testen, aber dann gleich /mnt wieder umounten, du wirst dort nicht mehr finden als auf dem NAS
+</I>&gt;<i> ext4magic hat selbst keine Offsetfunktion und einen solchen Patch zu schreiben w&#252;rde Monate dauern, da das bestimmt 1000 Codezeilen betreffen w&#252;rde.
+</I>&gt;<i> 
+</I>&gt;<i> Ich habe aber eine Idee was die Schicht dazwischen sein k&#246;nnte. ;-)
+</I>&gt;<i> Meine Vermutung ist folgende. /dev/db1 und /dev/sd?1 sind zu einem Raid1 zusammengebaut worden /dev/md?
+</I>&gt;<i> Auf diesem Raid ist dann wiederum eine Partitionstabelle geschrieben worden, und gemountet wird dann die erste Partition dieses Raids.
+</I>&gt;<i> 
+</I>&gt;<i> Um dieses zweifesfrei nachzuweisen m&#252;sste du mal versuchen die Partitionstabelle von /dev/sdb1 auszulesen.
+</I>&gt;<i> Fdisk wird bei dieser Plattengr&#246;&#223;e nicht funktionieren, also versuche mit parted &#8211;l /dev/sdb1 mal eine Partitionstabelle von sdb1 zu lesen.
+</I>&gt;<i> Sollte dort wirklich eine solche sein, dann geht&#8217;s weiter. ;-)
+</I>&gt;<i> 
+</I>&gt;<i> Ben&#246;tigt wird noch die Raidkonfiguration die auf /dev/sdb1  steht
+</I>&gt;<i> 
+</I>&gt;<i> # mdadm  &#8211;examine  /dev/sdb1
+</I>&gt;<i> 
+</I>&gt;<i> Gemacht werden m&#252;sste dann folgendes, aber mal noch nichts dergleichen machen, ich stelle erstmal nur den Weg vor, ich will erst die erfolgreiche Ausgabe der obrigen Befehle sehen.
+</I>&gt;<i> 
+</I>&gt;<i> * Die alte Raidkonfiguration auf der sdb1 l&#246;schen  # damit geh&#246;rt sich nicht mehr zu deinem NAS Raid, du m&#252;sstest also
+</I>&gt;<i>      gut auf die andere Platte aufpassen, dort sind jetzt die alleinigen Dateien aktuell. 
+</I>&gt;<i>      Die sdb m&#252;sste neu rebuildet werden wenn sie wieder zum orginal Raid in die NAS Box soll,
+</I>&gt;<i>      f&#252;rchte aber, das m&#252;sste sie jetzt sowieso schon, weil beide Teile mittlerweile nicht mehr 100%  identisch sind.
+</I>&gt;<i> 
+</I>&gt;<i> * Dann wird mit der sdb1 ein neues Raid1 erzeugt, und zwar mit einer fehlenden Platte, also ein Raid1 mit einer fehlenden Platte neu erstellt.
+</I>&gt;<i>   Durch die fehlende 2 Platte kann also kein Rebuild angesto&#223;en werden, die Daten werden also dabei nicht &#252;berschrieben.
+</I>&gt;<i> 
+</I>&gt;<i> * Das Raid das dabei entsteht sollte eine Partitionstabelle haben und sobald das Raid erzeugt ist, sollte udev neue Knoten f&#252;r die Partitionen 
+</I>&gt;<i>      auf dem Raid erzeugen. Eine dieser Partitionen ist dann das Dateisystem. Das l&#228;sst sich mit dem file &#8211;Befehl nachweisen. Wahrscheinlich partition1
+</I>&gt;<i> 
+</I>&gt;<i> * Auf diese Partition kannst du dann mit ext4magic losgehen.  
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Interessanterweise findet photorec durchaus etwas auf der Platte, nur v&#246;llig unstrukturiert und ohne Verzeichnisse.
+</I>&gt;&gt;<i> (auch restorer ultimate demo oder r-linx finden Dateien) allerdings finden die auf der 3TB Platte zig T-Bytes und Millionen von Dateien), das kann man ja gar nicht handeln...
+</I>&gt;&gt;<i> Meine Hoffnung w&#228;re, dass das Verzeichnis und die darunter liegenden Verzeichnisse &quot;../data/..&quot; wieder hergestellt werden k&#246;nnten.
+</I>&gt;&gt;<i> oder kann ich mir das abschminken, weil eh nur einzelne Dateien wiederhergestellt werden k&#246;nnen?
+</I>&gt;&gt;<i> die Bilder/Videos waren nach Jahren sortiert...
+</I>&gt;<i> 
+</I>&gt;<i> Was ext4magic finden wird und finden kann h&#228;ngt davon ab was du in diesem Dateisystem in letzter Zeit gemacht hast.  Leider kann ich so auch noch nicht sehen
+</I>&gt;<i> wie viele Daten im Dateisystem derzeit liegen, und wieviel insgesamt geschrieben wurden, da die Superblockkopie die du gepostet hast eine Kopie ist,
+</I>&gt;<i> die schon w&#228;hrend der Erstellung das Dateisystems angefertigt wurde, da war nat&#252;rlich alles leer. Auch ist seltsamer weise dort in dieser Kopie
+</I>&gt;<i> noch kein g&#252;ltiges Journal (letzte Zeile ) eingetragen. Ohne Journal w&#252;rde nat&#252;rlich mit ext4magic gar nichts gehen.
+</I>&gt;<i> Um zu sehen ob das Journal  aktuell da ist und wie gro&#223; es ist, m&#252;sste man sich den ersten Superblock anschauen.
+</I>&gt;<i> 
+</I>&gt;<i> Typischerweise sind in einem (default) 128MB gro&#223;en Journal 200000 bis 300000 Inodekopien zu finden, viele jedoch doppelt viele auch noch nie benutzte,
+</I>&gt;<i> und nach L&#246;schvorg&#228;ngen sind viele dieser Kopien auch unbrauchbar, weil sie die schon gel&#246;schten Kopien sind.
+</I>&gt;<i> Von Filesystembereichen in denen du in letzter Zeit nicht geschrieben und gelesen hast ist wahrscheinlich gar nichts mehr zu finden. 
+</I>&gt;<i> Wenn nicht mehr als 100000 Dateien mit einem Schlag gel&#246;scht wurden, und hinterher nicht noch mit dem
+</I>&gt;<i> Dateisystem weitergearbeitet wurde ist schon noch ne Menge wiederherzustellen, mit Namen und eventuell auch mit halben oder vollst&#228;ndigen Dateipfad, aber eine Garantie
+</I>&gt;<i> gibt es nicht. Ist eben immer auch Gl&#252;cksache. Die Magische Funktion w&#252;rde nach gro&#223;en L&#246;schvorg&#228;ngen noch mehr finden, aber bei dieser Plattengr&#246;&#223;e wohl kaum zu handeln.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> robi
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Ext4magic-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">Ext4magic-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">https://lists.berlios.de/mailman/listinfo/ext4magic-users</A>
+</I>&gt;<i> 
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000009.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

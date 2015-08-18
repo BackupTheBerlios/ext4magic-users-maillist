@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] Fehlercode &amp; Exit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20Fehlercode%20%26%20Exit&In-Reply-To=%3Cmailman.2852.1385566930.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000004.html">
+   <LINK REL="Next"  HREF="000006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] Fehlercode &amp; Exit</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20Fehlercode%20%26%20Exit&In-Reply-To=%3Cmailman.2852.1385566930.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] Fehlercode &amp; Exit">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Wed Nov 27 16:30:35 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000004.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+        <LI>Next message: <A HREF="000006.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5">[ date ]</a>
+              <a href="thread.html#5">[ thread ]</a>
+              <a href="subject.html#5">[ subject ]</a>
+              <a href="author.html#5">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hallo Eli,
+
+&gt;&gt;<i> Fakt ist, dass alles unter /raid0/_ehemals_data_/ weg ist.
+</I>&gt;&gt;<i> Die Platten sind in raid1 Konfiguriert (Mirror) und &quot;partet -l&#8220; &#252;ber mein Ubuntu zeigt das auch an.
+</I>Was dir partet anzeigt ist nur die ID aus der Partitionstabelle, ob das wirklich ein normales Raid ist, oder ob da noch 
+irgendwelche andere Schichten dazwischen gepackt sind sieht man da nicht.
+
+&gt;&gt;<i> 2		24GB	3001GB	 2926GB						RAID
+</I>Wenn es wirklich nur 24 GB sein sollten, dann hast Gl&#252;ck, du wirst wahrscheinlich ein Image von dieser 
+Partition ben&#246;tigen, 24GB lassen sich noch vern&#252;nftig handhaben.
+
+&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>&gt; ext4magic /dev/sdb2&#160;
+</I>&gt;&gt;<i> /dev/sdb2 Error 2133571347 while opening filesystem
+</I>Fehler bedeutet soviel, das dort wo du suchst kein ext2/3/4  Superblock ist.
+
+Entweder  ist nach dem rebooten  eine andere Partitionstabelle aktiv geworden,
+oder du liegst falsch, und das Dateisystem liegt woanders,
+oder es ist kein wirkliches ext3/4,
+oder es ist das Dateisystem oder der Anfang davon &#252;berschrieben worden,
+oder das Dateisystem hat durch dazwischen gelagerte Schichten,(Raid, LV oder asiatischen Eigenbauten, oder) einen anderen Offset.
+oder,oder, oder.
+
+Der M&#246;glichkeiten gibt es gen&#252;gend, ist so nicht zu ermitteln.
+Wenn du der Meinung bist, dort auf dieser Partition sollte ein ext3/4 Dateisystem drauf sein, oder drauf gewesen sein
+dann versuche folgendes. Der folgende Befehl versucht Spuren eines extfs Superblocks auf der Partition zu finden. (kann lange dauern)
+ # od -Ax -x /dev/sdb2 | awk '$6 == &quot;ef53&quot; &amp;&amp; $1 ~/.*30$/ {print}'
+
+Es sollten mehrere Kopien davon vorhanden sein, entweder als Superblock selbst, dessen Kopien und als massenweise Kopien
+des Superblocks im Journal.  Das hier ist der orginale an der Hexadezimalen Adresse im ersten Feld 000430 zu erkennen.
+
+000430 93bd 5294 00bd ffff ef53 0001 0001 0000
+
+Entscheidend ist das &#8222;ef53&#8220;  das Feld davor und die letzten beiden Felder sollten in allen deinen Kopien die gleich sein,
+und k&#246;nnen andere Werte haben wie meine, daran kannst du eventuelle Blindg&#228;nger in der Ausgabe erkennen.
+
+8000030 e6af 4e21 0000 ffff ef53 0000 0001 0000
+#143f9630 9978 23da 5a5a 8014 ef53 28d8 2bef be58
+18000030 e6af 4e21 0000 ffff ef53 0000 0001 0000
+#222ebd30 ee99 ffff 5356 9ce8 ef53 81ff b9c3 7152
+28000030 e6af 4e21 0000 ffff ef53 0000 0001 0000
+#2bfa1630 0000 01ef 0000 0001 ef53 0001 f100 0001
+38000030 e6af 4e21 0000 ffff ef53 0000 0001 0000
+
+Was nicht dazu geh&#246;rt habe ich mal in der Beispielausgabe mit einem # markiert
+Weitere folgen dann  noch in immer gr&#246;&#223;eren Abst&#228;nden. 
+
+48000030 e6af 4e21 0000 ffff ef53 0000 0001 0000
+c8000030 e6af 4e21 0000 ffff ef53 0000 0001 0000
+ 
+Du solltest 4 besser 5 davon gefunden haben, dann kannst du den Befehl abbrechen.
+
+Du kannst jeden pr&#252;fen ob es wirklich ein Superblock ist, das Beispiel hier stammt
+Von einem Dateisystem 4KB mit Blocksize, das d&#252;rfte bei deiner 24G gr&#246;&#223;en Partition wohl wahrscheinlich sein.
+Geht aber nicht wenn das Dateisystem einen nicht durch 4K Bereich verschoben ist(  4K sind 1000 hex, ist ein normaler Block) 
+
+Dazu brauchst du einen Rechner Kcalc oder vergleichbar auch bei Gnome
+Einstellung auf Logig (eventuell auch wissenschaftlich) und dann die erste Zahl eingeben
+zB:  C8000030  - 30  =
+dann auf dezimal umstellen 3355443200
+% 4096 =  
+819200
+
+Das muss bei einem 4K offset und g&#252;ltiger Superblockkopy sauber aufgehen dieses dann hier in diesen Befehl einsetzen
+
+# dumpe2fs -h -o blocksize=4096 -o superblock=819200 /dev/sda6
+
+Ergebnis einer solchen Kopie sieht dann so in der Art aus.
+
+Filesystem volume name:   &lt;none&gt;
+Last mounted on:          &lt;not available&gt;
+Filesystem UUID:          cee6fcd4-269d-47b2-89e2-1d88f71d2b5f
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent flex_bg sparse_super large_file huge_file uninit_bg dir_nlink extra_isi
+ze
+Filesystem flags:         signed_directory_hash
+Default mount options:    (none)
+Filesystem state:         not clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              1310720
+Block count:              5242880
+Reserved block count:     262144
+Free blocks:              5116591
+Free inodes:              1310709
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      1022
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         8192
+Inode blocks per group:   512
+Flex block group size:    16
+Filesystem created:       Sat Jul 16 21:29:42 2011
+Last mount time:          n/a
+Last write time:          Sat Jul 16 21:29:51 2011
+Mount count:              0
+Maximum mount count:      -1
+Last checked:             Sat Jul 16 21:29:42 2011
+Check interval:           0 (&lt;none&gt;)
+Lifetime writes:          452 MB
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:               256
+Required extra isize:     28
+Desired extra isize:      28
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      bd39f845-7ed7-4a28-b4b6-73c54e322f79
+--More--(88%)
+
+Sollte das passen und du mehrere solcher zusammenpassender (UUID und gr&#246;&#223;e vergleichen) Superblockkopien gefunden haben , dann
+Fehlt nur der Superblock eventuell noch ersten Kopien auch noch, die anderen haben aber alle den genauen Anfangswert wie meine,
+dann ist der Dateianfang &#252;berschrieben, dann kommst du mit dem Howto im Wiki unter Expert-Mode wahrscheinlich
+wieder an deine Dateien. (eventull auch mit fsck und Superblockkopien wenn nur der Supberblock kaputt ist, aber sollte da wirklich
+sonst auch noch was gel&#246;scht sein, oder mehr als nur die ersten paar Bl&#246;cke defekt sein,  nach einem fsck geht mit ext4magic dann nichts mehr)
+
+Sind die Bl&#246;cke alle verschoben, also zB der erste Wert immer um 1000 gr&#246;&#223;er als in meiner Ausgabe, dann f&#228;ngt das Dateisystem
+In der Partition einen Bl&#246;ck sp&#228;ter an. Es ist also ein Offset vorhanden.
+
+Den bekommst du am besten mit einem Image der Partition weg.
+Also mit dd oder was auch immer eine Kopie der Partition als image anlegen
+
+# dd if=/dev/sdb1 of=/tmp/sdb1_kopie.img
+
+Dann dort ein loopdevice mit Offset darauf setzen.
+
+# losetup &#8211;f /tmp/sdb1_kopie.img &#8211;o 4096
+Die 4096 ist der Offsetwert also der von dir festgestellte Differenzbetrag mit dem das Dateisystem sp&#228;ter beginnt in dezimal (hex 1000 = 4096)
+
+Dann nachschauen welches loopdevice benutzt worden ist
+# losetup &#8211;a
+
+Jetzt kannst du versuchen das loop zu mounten, aber bitte erstmal readonly, damit nicht noch Journaldaten kaputt  gehen wenn wirklich was dort drinnen
+gel&#246;scht sein sollte.
+
+# mount &#8211;o ro /dev/loop0 /mnt
+
+Sollte was kaputt sein, dann kannst du dieses loop jetzt auch direkt mit ext4magic benutzen.
+
+
+Viel Erfolg, ansonsten noch mal melden
+robi
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000004.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+	<LI>Next message: <A HREF="000006.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5">[ date ]</a>
+              <a href="thread.html#5">[ thread ]</a>
+              <a href="subject.html#5">[ subject ]</a>
+              <a href="author.html#5">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

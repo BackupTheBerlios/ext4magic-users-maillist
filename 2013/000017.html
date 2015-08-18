@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3587.1386530363.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000016.html">
+   <LINK REL="Next"  HREF="000018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3587.1386530363.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Sun Dec  8 20:19:20 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000016.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000018.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Robi,
+
+rasche R&#252;ckmeldung von mir.
+Ich habe die zweite Platte gleich raus gemacht, nachdem ich den ssh-Zugang f&#252;r die Jungs aus Taiwan noch 2 mal bereitgestellt hatte.
+So oft ist die nicht mehr gemountet worden.
+
+Allerdings habe ich heute festgestellt, dass Ubuntu die Platten mountet, keine Ahnung warum.
+Ich hatte Dir ja erz&#228;hlt, dass beim Booten die RAID-Wiederherstellung versucht was zu machen. Ich muss da dann auf der Konsole &#8222;NEIN&#8220; eingeben.
+Der x-Server von Ubuntu startet nicht mehr automatisch. 
+2mal Hardware-Reset, und booten, dann geht er wieder auf den x-server.
+-&gt; und da habe ich heute festgestellt werden die Partitionen gemountet (bin nicht ganz sicher ob alle gemountet worden sind, habe sie aber im Dateimanager in der Ordnerleiste links gesehen
+
+Das hat wohl tats&#228;chlich mit dem mdadm zu tun. Das war ja vorher nicht installiert???
+
+Gru&#223;,
+Eli
+
+Am 08.12.2013 um 19:34 schrieb <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">ext4magic-users at lists.berlios.de</A>:
+
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> 300000 gel&#246;schte Dateien und dann 14 Tage gewartet bis die Platte vom Kontroller ging. ;-(((
+</I>&gt;<i> Viel Hoffnung mache ich dir da nicht. Im Journal wird da nicht viel brauchbares mehr  im Journal zu finden sein.
+</I>&gt;<i> 128 MB Journal sind maximal 500000 Inode, (typisch  nur 200000-400000) da d&#252;rften das bei dir dort drinnen fast alles die  gel&#246;schten sein.
+</I>&gt;<i> Bei mehrmaligem mounten danach, oder sonstigen Zugriffsversuchen auf das Dateisystem hast du mit Sicherheit auch noch einiges vom Rest &#252;berschrieben.
+</I>&gt;<i> 
+</I>&gt;<i> Wenn du mit diesen Zeitparametern noch &#220;berreste von der Datenstruktur siehst, sollte die  &#8211;m  oder &#8211;M Option noch einiges wiederherstellen k&#246;nnen.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Nachdem der &#8222;l&#8220; Parameter nicht findet, habe ich es mit dem &#8222;m&#8220; Parameter probiert:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic /dev/md0 -m -a 1383851400 -b 1383851658 restore/
+</I>&gt;&gt;<i> Speicherzugriffsfehler (Speicherabzug geschrieben)
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Was k&#246;nnte das sein??
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Eventuell kommt das, weil der Speicherplatz auf restore/ zu gering ist??
+</I>&gt;<i> 
+</I>&gt;<i> Aber mach dir nicht zuviel Hoffnung darauf, das in einer Dateistruktur mit original  Namen und Path zu finden..
+</I>&gt;<i> 
+</I>&gt;<i> Optionen richtig benutzen:
+</I>&gt;<i> # ext4magic /dev/md0  -m  -a  1383851400   -d   /PATH/ZUM/restore
+</I>&gt;<i> 
+</I>&gt;<i> Und Verzeichnis restore muss beschreibbar und auf einem Linuxdateisystem liegen zB. ext3 oder ext4 , also nicht auf  NFS/SAMBA/NTFS/ &#8230;&#8230;&#8230;..
+</I>&gt;<i> Die Gr&#246;&#223;e wird nicht abgefragt, wenn es eben voll ist dann bringt ext4magic Fehlermeldungen das das Scrheiben nicht funktioniert hat,  macht aber munter weiter, bis es fertig ist oder du es abbrichst.
+</I>&gt;<i> 
+</I>&gt;<i> Warum ext4magic dort bei dir genau abgest&#252;rzt ist, ist mir nicht klar, da die Optionen wohl aber so auch nicht korrekt gesetzt sind, m&#252;sste ich auch erst suchen was ext4magic da versucht haben k&#246;nnte.  Starte das als root wenn m&#246;glich aus einer /bin/bash heraus, wenn es sowas noch auf
+</I>&gt;<i> ?buntu geben sollte,  Dash (Debian Almquist Shell) hat schon gelegentlich  in einigen Situationen  Probleme bereitet. 
+</I>&gt;<i> 
+</I>&gt;<i> robi
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Ext4magic-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">Ext4magic-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">https://lists.berlios.de/mailman/listinfo/ext4magic-users</A>
+</I>&gt;<i> 
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000016.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000018.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

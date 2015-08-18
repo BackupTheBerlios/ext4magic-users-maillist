@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3416.1386277054.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000011.html">
+   <LINK REL="Next"  HREF="000013.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3416.1386277054.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Thu Dec  5 21:57:30 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000011.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000013.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12">[ date ]</a>
+              <a href="thread.html#12">[ thread ]</a>
+              <a href="subject.html#12">[ subject ]</a>
+              <a href="author.html#12">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Robi,
+
+Ubuntu will beim Booten an das RAID ran, vermutlich weil ich mdadm installiert habe.
+
+Es gibt zumindest erste Erfolge!!
+
+Das RAID scheint aktiv zu sein (was wohl zu erwarten w&#228;re, da die HDD im NAS ja bootet)
+------------------------------------------------------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# cat /proc/mdstat
+Personalities : [linear] [multipath] [raid0] [raid1] [raid6] [raid5] [raid4] [raid10]
+md10 : active raid1 sdb1[0]
+     2096108 blocks super 1.2 [2/1] [U_]
+
+md0 : active raid1 sdb2[0]
+     2906650624 blocks super 1.2 [2/1] [U_]
+
+md50 : active raid1 sdb3[0]
+     524268 blocks super 1.2 [2/1] [U_]
+
+md70 : active raid1 sdb4[0]
+     10484660 blocks super 1.2 [2/1] [U_]
+
+unused devices: &lt;none&gt;
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+&gt;&gt;<i> Hier mal die f&#252;r mich hoffnungsvollste Ausgabe:
+</I>---------------------------------------------------------------------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic /dev/md0 -f /
+Filesystem in use: /dev/md0
+
+
+Dump internal Inode 2
+Status : Inode is Allocated
+
+Inode: 2   Type: directory    Mode:  0755   Flags: 0x0
+Generation: 0    Version: 0x00000000:000001e9
+User:     0   Group:     0   Size: 4096
+File ACL: 0    Directory ACL: 0
+Links: 3   Blockcount: 8
+Fragment:  Address: 0    Number: 0    Size: 0
+ctime: 1384972271:0288000008 -- Wed Nov 20 19:31:11 2013
+atime: 1375207530:0000000000 -- Tue Jul 30 20:05:30 2013
+mtime: 1384972271:0288000008 -- Wed Nov 20 19:31:11 2013
+crtime: 1375207530:0000000000 -- Tue Jul 30 20:05:30 2013
+Size of extra inode fields: 28
+       2  d  755 (2)      0      0           4096 20-Nov-2013 19:31 .
+       2  d  755 (2)      0      0           4096 20-Nov-2013 19:31 ..
+      11  l  777 (7)      0      0             10 20-Nov-2013 19:31 sys
+100139009  d  755 (2)      0      0           4096  7-Nov-2013 20:30 meta
+&lt;77332481&gt; d  755 (2)      0      0              0  7-Nov-2013 20:29 data  &gt;&gt;&gt; das ist das Verzeichnis, dass gel&#246;scht wurde, es liegt unter dem noch bestehenden Verzeichnis /raid0
+&lt;100139009&gt; d  755 (2)      0      0           4096  7-Nov-2013 20:30 meta
+&lt;      13&gt; _  644 (1)      0      0              0  5-Nov-2013 00:18 tm0_quota
+
+ext4magic : EXIT_SUCCESS
+
+---------------------------------------------------------------------------------------------
+Wie mache ich jetzt da weiter??
+Helfen mir die Zahlen, die der Befehl ausspuckt?
+
+Liebe Gr&#252;&#223;e,
+Eli
+
+
+
+Nachfolgend noch ein paar Ausgaben...
+
+&gt;<i> Hier das Ergebnis vom file Befehl f&#252;r md0
+</I>------------------------------------------------------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# file -s /dev/md0
+/dev/md0: Linux rev 1.0 ext4 filesystem data, UUID=45129e08-db88-4d94-8c73-5202dfbf5e2a (needs journal recovery) (extents) (large files) (huge files)
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+&gt;&gt;<i> ext4magic -J /dev/md0
+</I>---------------------------------------------------------------------------------------------
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic -J /dev/md0
+Filesystem in use: /dev/md0
+
+Using  internal Journal at Inode 8
+
+Journal Super Block:
+Signature: 0xc03b3998
+Blocktype : V2 superblock
+Journal block size: 4096
+Number of journal blocks: 32768
+Journal block where the journal actually starts: 1
+Sequence number of first transaction: 826832
+Journal block of first transaction: 1
+Error number: 0
+Compatible Features: 0
+Incompatible features: 1
+Read only compatible features: 0
+Journal UUID: 45129e08-db88-4d94-8c73-5202dfbf5e2a
+Number of file systems using journal: 1
+Location of superblock copy: 0
+Max journal blocks per transaction: 0
+Max file system blocks per transaction: 0
+IDs of all file systems using the journal:
+01. : 00000000-0000-0000-0000-000000000000
+
+
+ext4magic : EXIT_SUCCESS
+&gt;<i> das Ergebnis von : ext4magic -S /dev/md0
+</I>-----------------------------------------------------------------------------------------
+^<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">Croot at optibuntu</A>:~# ext4magic -S /dev/md
+md/   md0   md10  md50  md70
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>:~# ext4magic -S /dev/md0
+Filesystem in use: /dev/md0
+
+Filesystem volume name:   &lt;none&gt;
+Last mounted on:          /raid0
+Filesystem UUID:          45129e08-db88-4d94-8c73-5202dfbf5e2a
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery extent flex_bg sparse_super large_file huge_file uninit_bg dir_nlink extra_isize
+Filesystem flags:         signed_directory_hash
+Default mount options:    (none)
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              181665792
+Block count:              726662622
+Reserved block count:     0
+Free blocks:              715208835
+Free inodes:              181665779
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      850
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         8192
+Inode blocks per group:   512
+RAID stride:              1
+RAID stripe width:        1
+Flex block group size:    16
+Filesystem created:       Tue Jul 30 20:05:22 2013
+Last mount time:          Wed Nov 20 19:31:10 2013
+Last write time:          Wed Nov 20 19:31:10 2013
+Mount count:              16
+Maximum mount count:      22
+Last checked:             Mon Nov  4 23:41:45 2013
+Check interval:           15552000 (6 months)
+Next check after:         Sun May  4 00:41:45 2014
+Lifetime writes:          1103 GB
+Reserved blocks uid:      0 (user root)
+Reserved blocks gid:      0 (group root)
+First inode:              11
+Inode size:	          256
+Required extra isize:     28
+Desired extra isize:      28
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      11fbcdec-6858-4bd8-a404-c80c07fd3989
+Journal backup:           inode blocks
+ext4magic : EXIT_SUCCESS
+---------------------------------------
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131205/96ed02e6/attachment.html">https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131205/96ed02e6/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000011.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000013.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12">[ date ]</a>
+              <a href="thread.html#12">[ thread ]</a>
+              <a href="subject.html#12">[ subject ]</a>
+              <a href="author.html#12">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] Fehlercode &amp; Exit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20Fehlercode%20%26%20Exit&In-Reply-To=%3Cmailman.2803.1385503326.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] Fehlercode &amp; Exit</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20Fehlercode%20%26%20Exit&In-Reply-To=%3Cmailman.2803.1385503326.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] Fehlercode &amp; Exit">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Tue Nov 26 22:54:04 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[Ext4magic-users] No undeled inode 99748101 in journal found
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hallo Robi,
+
+auf der verzweifelten Suche nach Hilfe bin ich auf Deine hervorragende Seite gesto&#223;en.
+
+Ich hatte mir eigens ein NAS (thecus N2520) f&#252;r die Sicherung meiner Daten angeschafft.
+Nun hatte ich mit viel M&#252;he s&#228;mtliche Platten und Partitionen untersucht nach Familienbildern und Filmen
+und diese auf das neue tolle NAS gepackt. (Meistens mit dem move-Befehl)
+
+Kaum waren die Daten drauf, passierte das Unm&#246;gliche: die Deinstallation der App &#8222;XBMC&#8220; &#252;ber das Webfrontend und der darauf folgende reboot
+sorgen daf&#252;r, dass das komplette Datenverzeichnis gel&#246;scht war.
+
+Die Leute aus Taiwan meinten jemand h&#228;tte sich per ssh auf das NAS eingeloggt und mit &quot;rm -r&quot; alles gel&#246;scht.
+Ich halte das f&#252;r v&#246;lligen Schwachsinn, zumal ein Ipfire l&#228;uft und die Ports dicht waren.
+
+Fakt ist, dass alles unter /raid0/_ehemals_data_/ weg ist.
+Die Platten sind in raid1 Konfiguriert (Mirror) und &quot;partet -l&#8220; &#252;ber mein Ubuntu zeigt das auch an.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>&gt; parted -l
+Modell: ATA ST3000DM001-1CH1 (scsi)
+Festpaltte /dev/sdb: 3001 GB
+Sektorgr&#246;&#223;e (logisch/physisch): 512B/4096B
+Partitionstabelle: gpt
+
+Nummer	Anfang	Ende	Gr&#246;&#223;e 	Dateisystem	Name	Flags
+4		1049KB	10,7GB	10,7GB						RAID
+.
+.
+.
+2		24GB	3001GB	 2926GB						RAID
+
+Auf Partition 2 liegt wohl das verschwundene Verzeichnis. Die Platte hat keine Dateisystem und ist mit RAID gekennzeichnet.
+Mein Problem nun ist, dass ich Dein Programm nicht wirklich laufen lassen kann, weil es einen Fehler ausspuckt:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/ext4magic-users">root at optibuntu</A>&gt; ext4magic /dev/sdb2 
+/dev/sdb2 Error 2133571347 while opening filesystem
+
+Die Platte ist auch nicht per Hand gemountet (hat auch nicht geklappt)
+
+Woran liegt&#8217;s?
+Und wie kann ich Dein Programm dr&#252;ber rauschen lassen?
+
+Liebe Gr&#252;&#223;e
+Eli
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131126/d739d8f3/attachment.html">https://lists.berlios.de/pipermail/ext4magic-users/attachments/20131126/d739d8f3/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[Ext4magic-users] No undeled inode 99748101 in journal found
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Ext4magic-users] Fehlercode &amp; Exit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/ext4magic-users/2013/index.html" >
+   <LINK REL="made" HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3479.1386348053.1457.ext4magic-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000012.html">
+   <LINK REL="Next"  HREF="000014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus</H1>
+    <B>ext4magic-users at lists.berlios.de</B> 
+    <A HREF="mailto:ext4magic-users%40lists.berlios.de?Subject=Re%3A%20%5BExt4magic-users%5D%20verschwundenes%20Verzeichnis%20NAS%20Thecus&In-Reply-To=%3Cmailman.3479.1386348053.1457.ext4magic-users%40lists.berlios.de%3E"
+       TITLE="[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus">ext4magic-users at lists.berlios.de
+       </A><BR>
+    <I>Fri Dec  6 17:39:02 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000012.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+        <LI>Next message: <A HREF="000014.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+
+Was du als n&#228;chstes brauchst ist die genaue Zeit zu der der Schlammassel passiert ist, und ein (Linux) Dateisystem das gro&#223; genug ist die recoverten Daten aufzunehmen.
+Das Dateisystem scheint rekursiv gel&#246;scht zu sein, nur noch eine Handvoll Inode sind in Benutzung. 
+
+Das Dateisystem in dem die wiedergefundenen Daten geschrieben werden sollen, sollte mindestens so gro&#223; sein, wie die gesch&#228;tzte Gr&#246;&#223;e der Daten die gel&#246;scht sind, je mehr je besser.
+Es geht hierbei aber kein Netzwerkdateisystem und kein Windowstypisches Dateisystem. Am besten eine gro&#223;e USB-Platte ein ext4 Dateisystem drauf anlegen und unter /mnt mounten. 
+
+Die Zeit. Du brauchst den Anfang und eventuell auch das Ende des L&#246;schvorganges.  Du hast einen Anhaltspunkt, Wed Nov 20 19:31:10 2013 ist das letzte mal was ge&#228;ndert worden, 
+wahrscheinlich war das die Zeit als du gemerkt hast es ist alles weg. Von dieser Zeit aus ein paar Stunden zur&#252;ck und diesen Zeitraum mit der Histroy-Funktion untersuchen.
+<A HREF="http://openfacts2.berlios.de/wikide/index.php/BerliosProject:Ext4magic-Time_Options">http://openfacts2.berlios.de/wikide/index.php/BerliosProject:Ext4magic-Time_Options</A>  (letzter Abschnitt)
+
+# ext4magic /dev/md0  -H  -a 1384965000  -b 1384973000       # deine m&#246;glichen Startzeiten f&#252;r die Histogramm Funktion, eventuell noch ein bisschen anpassen.
+
+Wichtig f&#252;r dich ist die &quot;d_time&quot; Tabelle. Dann die Zeitmarken  &#8211;a &#8230;  und  &#8211;b &#8230;.  entsprechend der Ausgaben weiter anpassen, die Zeit also soweit einschachteln bis du auf die L&#246;schstartzeit auf ungef&#228;hr 1 Minute herangekommen bist, und das L&#246;schen bei der -b Zeit schon abgeschlossen ist.  -a ist eine &quot;Zeit davor&quot;, und -b eine &quot;Zeit danach&quot;.  Ben&#246;tigt wird m&#246;glichst im Minutenbereich genau, ein kleiner Zeitabschnitt (sagen wir 5-8 Minuten, in denen die Dateien gel&#246;scht wurden. Wenn es doch ein l&#228;ngeres L&#246;schman&#246;ver gewesen sein sollte, dann entsprechend eine gr&#246;&#223;eres Zeitfenster.
+ 
+Du kannst wenn du willst testen inwieweit sich mit den so gefunden Zeiten f&#252;r &#8211;a und &#8211;b jetzt in deinem Journal g&#252;ltige Inodekopien finden lassen, mit denen sich Dateien recovern lassen w&#252;rden.
+
+# ext4magic  /dev/md0 &#8211;l  -a   &#8230;&#8230;..    &#8211;b &#8230;&#8230;&#8230;         # das &#8220;-l&#8221; ist ein kleines &#8220;-L&#8220; wie list
+
+Alles was jetzt als 100% angezeigt wird, l&#228;sst sich mit diesen Zeitoptionen problemlos wiederherstellen. 
+Sollte das widererwarten  schon aussreichen und alles sein was du brauchst, dann das &quot;-l&quot;  durch  &quot;-r&quot;  austauschen und mit -d das Verzeichnis angeben in das geschrieben werden soll.
+
+Allerdings ist es in deinem Fall wahrscheinlich doch notwendig so viele Dateien wie nur irgendwie m&#246;glich wiederzubekommen, auch wenn eventuell da keine Inodekopie vorhanden sein sollte, 
+und eventuell der Name der Datei nicht mehr herzustellen ist.
+Bilder, Videos, Musik, Dokumente sind in in ext4magic die gebr&#228;uchlichsten Dateiformate einprogrammiert, und ext4magic kann noch Informationen auswerten die w&#228;hrend des L&#246;schens geschrieben werden. Somit kann mit der Magischen Funktion auch Dateien gefunden werden, von denen keine Spuren mehr im Journal zu finden sind.
+
+# ext4magic /dev/md0  &#8211;m  &#8211;a &#8230;&#8230;.     &#8211;d  /mnt/Recoverdir
+
+Nur die Zeitoption &#8211;a angeben und  &#8211;d das Verzeichnis in das geschrieben werden soll, das d&#252;rfte eine ganze Zeit ( eventuell auch einige Stunden )  zu tun haben, (nicht unterbrechen wenn er mal scheinbar l&#228;ngere Zeit  nichts macht, das ist normal, das geht dann schon weiter) und  so viel wie nur irgendwie m&#246;glich in mehreren aufeinanderfolgenden Schritten aus dem gel&#246;schten Dateisystem herausholen.
+
+Viel Erfolg.
+	robi 
+ 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000012.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+	<LI>Next message: <A HREF="000014.html">[Ext4magic-users] verschwundenes Verzeichnis NAS Thecus
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/ext4magic-users">More information about the Ext4magic-users
+mailing list</a><br>
+</body></html>
